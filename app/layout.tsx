@@ -18,8 +18,8 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
   title: "Mountain Car — Car Rental Iceland",
   description:
-    "Straightforward 4x4 rentals and campers in Iceland. No hidden fees, free minor damages. Based near KEF Airport.",
-  keywords: "car rental Iceland, 4x4 Iceland, camper Iceland, KEF airport",
+    "Straightforward car and camper rentals in Iceland. No hidden fees, free minor damages. Based near KEF Airport.",
+  keywords: "car rental Iceland, camper rental Iceland, KEF airport, Reykjanesbær",
   openGraph: {
     title: "Mountain Car — Car Rental Iceland",
     description: "Not just a rental. Your guide to Iceland's wonders.",
