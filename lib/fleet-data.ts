@@ -3,7 +3,7 @@ export type Car = { name: string; dk: string; img: string; specs: CarSpec[] };
 
 export const cars: Car[] = [
   {
-    name: "Dacia Duster 4x4",
+    name: "Dacia Duster",
     dk: "fleet.d1",
     img: "https://d1yei2z3i6k35z.cloudfront.net/16287944/698b8715bd264_2.jpg",
     specs: [
