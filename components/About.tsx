@@ -39,7 +39,7 @@ export default function About() {
           <div className="relative">
             <Image
               src="https://d1yei2z3i6k35z.cloudfront.net/16287944/698b70653ba5c_Untitleddesign.jpg"
-              alt="Iceland Adventure"
+              alt="Mountain Car in Iceland"
               width={600}
               height={500}
               className="rounded-2xl object-cover w-full h-[260px] md:h-[420px]"
