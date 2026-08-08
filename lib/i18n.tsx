@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useSyncExternalStore, ReactNode } from "react";
 
 export type Lang = "en" | "pl" | "is";
 export const LANGS: Lang[] = ["en", "pl", "is"];
@@ -59,26 +59,48 @@ const dict: Record<Lang, Record<string, string>> = {
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
 const LangContext = createContext<Ctx>({ lang: "en", setLang: () => {}, t: (k) => k });
 
-export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
+// Jezyk trzymany poza Reactem (localStorage + fallback w pamieci), czytany przez
+// useSyncExternalStore — na serwerze zawsze "en", wiec hydracja jest spojna.
+const LANG_EVENT = "mc-lang-change";
+let currentLang: Lang | undefined;
 
-  useEffect(() => {
-    let saved: Lang | null = null;
-    try { saved = localStorage.getItem("mc-lang") as Lang | null; } catch {}
-    if (!saved || !LANGS.includes(saved)) {
-      const nav = (navigator.language || "en").slice(0, 2).toLowerCase();
-      saved = nav === "pl" ? "pl" : nav === "is" ? "is" : "en";
-    }
-    setLangState(saved);
-  }, []);
+function readLang(): Lang {
+  let saved: Lang | null = null;
+  try { saved = localStorage.getItem("mc-lang") as Lang | null; } catch {}
+  if (saved && LANGS.includes(saved)) return saved;
+  const nav = (navigator.language || "en").slice(0, 2).toLowerCase();
+  return nav === "pl" ? "pl" : nav === "is" ? "is" : "en";
+}
+
+function getLangSnapshot(): Lang {
+  if (currentLang === undefined) currentLang = readLang();
+  return currentLang;
+}
+
+function subscribeLang(onChange: () => void) {
+  const onStorage = () => {
+    currentLang = undefined; // zmiana w innej karcie — przeczytaj localStorage na nowo
+    onChange();
+  };
+  window.addEventListener(LANG_EVENT, onChange);
+  window.addEventListener("storage", onStorage);
+  return () => {
+    window.removeEventListener(LANG_EVENT, onChange);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+export function LangProvider({ children }: { children: ReactNode }) {
+  const lang = useSyncExternalStore(subscribeLang, getLangSnapshot, () => "en" as Lang);
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
 
   const setLang = (l: Lang) => {
-    setLangState(l);
+    currentLang = l;
     try { localStorage.setItem("mc-lang", l); } catch {}
+    window.dispatchEvent(new Event(LANG_EVENT));
   };
 
   const t = (k: string) => (dict[lang] && dict[lang][k]) || dict.en[k] || k;
