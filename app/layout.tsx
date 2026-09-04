@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
 import { LangProvider } from "@/lib/i18n";
+import FarewellModal from "@/components/FarewellModal";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -38,7 +39,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${montserrat.variable} ${openSans.variable}`}>
       <body className="font-[var(--font-open-sans)]">
-        <LangProvider>{children}</LangProvider>
+        <LangProvider>
+          {children}
+          <FarewellModal />
+        </LangProvider>
       </body>
     </html>
   );
