@@ -1,0 +1,68 @@
+{
+  "repo": ".",
+  "name": ".",
+  "ok": true,
+  "error": null,
+  "parser": "regex",
+  "parserFallbackFiles": 0,
+  "timedOut": false,
+  "elapsedMs": 348,
+  "warnings": [],
+  "files": 6,
+  "loc": 422,
+  "testFiles": 1,
+  "srcToTestRatio": 5,
+  "functions": {
+    "total": 12,
+    "over60": 1,
+    "over100": 0,
+    "maxLen": {
+      "length": 69,
+      "name": "POST",
+      "file": "app/api/quote/route.ts"
+    },
+    "paramsOver4": 0,
+    "nestingOver3": 1
+  },
+  "largeFiles": {
+    "over400Count": 0,
+    "over400Top5": [],
+    "over1000Count": 0
+  },
+  "shortIdentifiers": {
+    "count": 1,
+    "top10": [
+      {
+        "name": "l",
+        "count": 1
+      }
+    ]
+  },
+  "anyUsage": 0,
+  "tsIgnore": 0,
+  "eslintDisable": 0,
+  "catchBlocks": {
+    "total": 3,
+    "silent": 0
+  },
+  "consoleLog": 0,
+  "todoFixmeHack": 0,
+  "comments": {
+    "commentLines": 18,
+    "loc": 422,
+    "ratio": 0.0427
+  },
+  "docCoverage": {
+    "exportedTotal": 7,
+    "documented": 0,
+    "ratio": 0
+  },
+  "jsxHardcodedText": 13,
+  "python": {
+    "functionsTotal": 0,
+    "publicFunctionsTotal": 0,
+    "functionsOver60": 0,
+    "missingDocstring": 0,
+    "bareExcept": 0
+  }
+}
