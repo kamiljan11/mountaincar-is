@@ -69,7 +69,12 @@ let currentLang: Lang | undefined;
 
 function readLang(): Lang {
   let saved: Lang | null = null;
-  try { saved = localStorage.getItem("mc-lang") as Lang | null; } catch {}
+  try {
+    saved = localStorage.getItem("mc-lang") as Lang | null;
+  } catch (err) {
+    // Storage blocked (private mode, embedded preview): fall back to browser language below.
+    console.warn("i18n: localStorage read failed, using navigator.language", err);
+  }
   if (saved && LANGS.includes(saved)) return saved;
   const nav = (navigator.language || "en").slice(0, 2).toLowerCase();
   return nav === "pl" ? "pl" : nav === "is" ? "is" : "en";
@@ -102,7 +107,12 @@ export function LangProvider({ children }: { children: ReactNode }) {
 
   const setLang = (l: Lang) => {
     currentLang = l;
-    try { localStorage.setItem("mc-lang", l); } catch {}
+    try {
+      localStorage.setItem("mc-lang", l);
+    } catch (err) {
+      // Non-fatal: the choice simply doesn't persist across visits.
+      console.warn("i18n: localStorage write failed, language choice won't persist", err);
+    }
     window.dispatchEvent(new Event(LANG_EVENT));
   };
 
