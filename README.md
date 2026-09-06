@@ -1,19 +1,27 @@
-# Mountain Car — Car Rental Iceland
+# Mountain Car — Car Rental Iceland (closed — now a demo)
 
-**Live:** [mountaincar.is](https://mountaincar.is) · **Status:** production · **Built & operated by** [Kamil Jan](https://kamiljan.com)
+**Live:** [mountaincar.is](https://mountaincar.is) · **Status:** demo (rental service closed) ·
+**Live business:** [garage.mountaincar.is](https://garage.mountaincar.is) ·
+**Built & operated by** [Kamil Jan](https://kamiljan.com)
 
-Public site for Mountain Car, a car rental operating near Keflavík airport. *"Not just a
-rental — your guide to Iceland's wonders."*
+Mountain Car, a car rental that operated near Keflavík airport, has closed. The site stays
+online as a portfolio/demo rather than being taken down or redirected — every visitor sees a
+dismissible notice pointing to the garage side of the business, which is the one still trading
+(see `docs/adr/0002-*.md` for why). Everything below describes the code as it still runs today.
 
-The job of this site is narrow and it is built accordingly: present the fleet, answer the
-questions that stop a booking, and get a qualified enquiry into the inbox. Reservations
-themselves are handled by the internal rental manager, not here.
+The job of this site was narrow and it is built accordingly: present the fleet, answer the
+questions that stop a booking, and get a qualified enquiry into the inbox. That pipeline (form
+→ API → Supabase/Resend) is still live in the code — see `docs/ARCHITECTURE.md` before assuming
+a stray form submission is a real customer.
 
 ## What it does
 
-- **Marketing site** for the rental — fleet, pricing context, and what is actually included
-- **Quote request API** (`app/api/quote`) — enquiries are validated server-side and delivered
-  by e-mail via Resend, so a form submission cannot be lost in a browser tab
+- **Marketing site** for the (now closed) rental — fleet, pricing context, and what was included
+- **Quote request API** (`app/api/quote`) — enquiries are validated server-side and best-effort
+  delivered by e-mail via Resend / saved to Supabase; see `docs/ARCHITECTURE.md` for what
+  "best-effort" means here and `docs/quality/BACKLOG.md` for the gap that leaves open
+- **Farewell notice** (`components/FarewellModal.tsx`) — tells visitors the rental closed and
+  points them to the live business, [garage.mountaincar.is](https://garage.mountaincar.is)
 
 ## Stack
 
@@ -21,6 +29,14 @@ Next.js 16 (App Router) · TypeScript · Tailwind CSS · Supabase · Resend for 
 e-mail · deployed on Vercel.
 
 Deliberately small: five runtime dependencies. A brochure site does not need a framework fleet.
+
+## Docs
+
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — modules, data flow, "where is X"
+- [`docs/adr/`](docs/adr/) — decisions actually made in this repo, with the rejected alternative
+- [`docs/GLOSSARY.md`](docs/GLOSSARY.md) — domain terms in EN/PL/IS
+- [`docs/RUNBOOK.md`](docs/RUNBOOK.md) — deploy, rollback, monitoring, known incidents
+- [`docs/quality/BACKLOG.md`](docs/quality/BACKLOG.md) — known gaps, deferred on purpose, with why
 
 ## Running locally
 
@@ -53,4 +69,4 @@ npx tsc --noEmit
 
 ## Licence
 
-Proprietary. Published for reference, not for reuse.
+Proprietary — see [`LICENSE`](LICENSE). Published for reference, not for reuse.

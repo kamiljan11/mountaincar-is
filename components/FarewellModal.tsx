@@ -17,9 +17,10 @@ function getSnapshot(): boolean {
   if (cached === null) {
     try {
       cached = sessionStorage.getItem(DISMISS_KEY) === "1";
-    } catch {
+    } catch (err) {
       // Storage blocked (private mode, embedded preview): show the notice
       // rather than silently hiding it.
+      console.warn("FarewellModal: sessionStorage read failed, showing notice", err);
       cached = false;
     }
   }
@@ -41,8 +42,9 @@ function dismissForThisSession(): void {
   cached = true;
   try {
     sessionStorage.setItem(DISMISS_KEY, "1");
-  } catch {
+  } catch (err) {
     // Non-fatal: the notice simply reappears on the next page load.
+    console.warn("FarewellModal: sessionStorage write failed, notice will reappear", err);
   }
   listeners.forEach((l) => l());
 }

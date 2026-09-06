@@ -49,7 +49,8 @@ export default function QuoteForm() {
       if (!res.ok) throw new Error("Failed to send");
       setStatus("success");
       form.reset();
-    } catch {
+    } catch (err) {
+      console.error("QuoteForm: submit failed", err);
       setStatus("error");
       setError(t("quote.error"));
     }
