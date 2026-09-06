@@ -1,19 +1,18 @@
 {
-  "repo": ".",
-  "name": ".",
+  "name": "mountaincar-is",
   "ok": true,
   "error": null,
-  "parser": "regex",
+  "parser": "typescript",
   "parserFallbackFiles": 0,
   "timedOut": false,
-  "elapsedMs": 348,
+  "elapsedMs": 235,
   "warnings": [],
   "files": 6,
   "loc": 422,
   "testFiles": 1,
   "srcToTestRatio": 5,
   "functions": {
-    "total": 12,
+    "total": 25,
     "over60": 1,
     "over100": 0,
     "maxLen": {
@@ -22,7 +21,7 @@
       "file": "app/api/quote/route.ts"
     },
     "paramsOver4": 0,
-    "nestingOver3": 1
+    "nestingOver3": 0
   },
   "largeFiles": {
     "over400Count": 0,
@@ -30,10 +29,14 @@
     "over1000Count": 0
   },
   "shortIdentifiers": {
-    "count": 1,
+    "count": 3,
     "top10": [
       {
         "name": "l",
+        "count": 2
+      },
+      {
+        "name": "c",
         "count": 1
       }
     ]
@@ -53,16 +56,17 @@
     "ratio": 0.0427
   },
   "docCoverage": {
-    "exportedTotal": 7,
+    "exportedTotal": 10,
     "documented": 0,
     "ratio": 0
   },
-  "jsxHardcodedText": 13,
+  "jsxHardcodedText": 0,
   "python": {
     "functionsTotal": 0,
     "publicFunctionsTotal": 0,
     "functionsOver60": 0,
     "missingDocstring": 0,
     "bareExcept": 0
-  }
+  },
+  "generatedAt": "2026-09-06"
 }
